@@ -1,4 +1,5 @@
 from machine import I2C, Pin
+import time
 
 
 class HTU21D(object):
@@ -8,6 +9,7 @@ class HTU21D(object):
 
     def __init__(self, scl=None, sda=None, i2c=None):
         """Initiate the HUT21D
+        
         Args:
             scl (int): Pin id where the sdl pin is connected to
             sda (int): Pin id where the sda pin is connected to
@@ -16,10 +18,10 @@ class HTU21D(object):
             self.i2c=i2c
         else:
             self.i2c = I2C(scl=Pin(scl), sda=Pin(sda), freq=100000)
-        self.running=False
 
     def _crc_check(self, value):
         """CRC check data
+        
         Notes:
             stolen from https://github.com/sparkfun/HTU21D_Breakout
         
@@ -44,11 +46,11 @@ class HTU21D(object):
 
     def _issue_measurement(self, write_address):
         """Issue a measurement.
+        
         Args:
             write_address (int): address to write to
         :return:
         """
-        import time
         self.i2c.start()
         self.i2c.writeto_mem(int(self.ADDRESS), int(write_address), '')
         self.i2c.stop()
