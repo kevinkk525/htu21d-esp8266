@@ -27,6 +27,7 @@ class HTU21D(object):
         
         Args:
             value (bytearray): data to be checked for validity
+            
         Returns:
             True if valid, False otherwise
         """
